@@ -1,10 +1,15 @@
+"usee client";
+
 import React, { useState} from "react";
 import Items from "./item.js";
-import EventCard from "../week3/event-card";
+import EventCard from "./event-card.js";
 
-export default function ItemList({ items, onSelectItem }) {
+export default function ItemList({ items, onItemSelect }) {
     const [sortBy, setSortBy] = useState("name");
   
+    const sortedItems = items.slice();
+
+
   items = items.sort((a, b) => {
       if (sortBy === "name") {
           return a.name.localeCompare(b.name);
@@ -38,16 +43,18 @@ export default function ItemList({ items, onSelectItem }) {
       </div><h1 className="text-4xl font-bold m-5 text-center text-purple-500">
           </h1>
         <div>
-            {items.map((item) => (
-                <React.Fragment key={item.id}
-                onClick={() => onSelectItem(item.name)}>
-                    
-                    <EventCard
-                        name={item.name}
-                        quantity={item.quantity}
-                        category={item.category}
-                    />
-                </React.Fragment>
+        {sortedItems.map((item) => (
+            <div
+              key={item.id}
+              onClick={() => onItemSelect(item)} // Pass the item to the onSelect function
+            >
+              <EventCard
+                name={item.name}
+                quantity={item.quantity}
+                category={item.category}
+                onSelect={onItemSelect}
+              />
+                </div>
             ))}
         </div>
 

@@ -1,3 +1,5 @@
+"use client";
+
 import React, {useState, useEffect} from "react";
 
 export default function MealIdeas({ ingredients }) {
@@ -9,7 +11,8 @@ export default function MealIdeas({ ingredients }) {
             const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingredients}`);
             const data = await response.json();
             const mealData = data.meals;
-            setMeals(data.meals);
+            console.log(mealData);
+            setMeals(mealData);
         }catch(error){
             console.log('Error fetching meal ideas', error);
         }
@@ -34,12 +37,15 @@ export default function MealIdeas({ ingredients }) {
             </h2>
             <div className="p-2">
                 <ul>
-                    {meals.length > 0 ? (
-                        meals.map((meal) => (
-                            <li key={meal.idMeal}>{meal.strMeal}</li>
-                        ))
+                    {meals !== null ? ( 
+                        meals.length > 0 ? (
+                            meals.map((meal) => (
+                                <li key={meal.idMeal}>{meal.strMeal}</li>
+                            ))
                     ) : (
                         <p>No meal ideas found</p>
+                    )) : (
+                        <p>Loading meal ideas...</p>
                     )}
                 </ul>
             </div>
