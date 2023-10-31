@@ -2,7 +2,7 @@ import React, { useState} from "react";
 import Items from "./item.js";
 import EventCard from "../week3/event-card";
 
-export default function ItemList({ items }) {
+export default function ItemList({ items, onSelectItem }) {
     const [sortBy, setSortBy] = useState("name");
   
   items = items.sort((a, b) => {
@@ -37,15 +37,20 @@ export default function ItemList({ items }) {
           </button>
       </div><h1 className="text-4xl font-bold m-5 text-center text-purple-500">
           </h1>
-          <div>
-              {items.map((items) => (
-                <><EventCard
-                      name={items.name}
-                      quantity={items.quantity}
-                      category={items.category} />
-                </>
-              ))}
-          </div>
+        <div>
+            {items.map((item) => (
+                <React.Fragment key={item.id}
+                onClick={() => onSelectItem(item.name)}>
+                    
+                    <EventCard
+                        name={item.name}
+                        quantity={item.quantity}
+                        category={item.category}
+                    />
+                </React.Fragment>
+            ))}
+        </div>
+
         </div>
     </>  
      );

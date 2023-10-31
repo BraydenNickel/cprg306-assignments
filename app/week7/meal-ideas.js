@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 
-export default function MealIdeas([ ingredients ]) {
+export default function MealIdeas({ ingredients }) {
     const [meals, setMeals] = useState([]);
 
     // Define a function to fetch meal ideas from the API

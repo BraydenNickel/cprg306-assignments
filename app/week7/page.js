@@ -2,13 +2,20 @@
 import React, {useState} from "react";
 import NewItem from "./new-item";
 import ItemList from "./item-list";
+import MealIdeas from "./meal-ideas";
 import ItemsData from "./items.json";
 
 export default function Page() {
     const [items, setItems] = useState(ItemsData);
+    const [selectedItemName, setSelectedItemName] = useState(" ");
 
     const handleAddItem = (newItem) => {
         setItems([...items, newItem]);
+    };
+
+    const handleSelectItem = (item) => {
+        const cleanedItemName = item.name.split(',')[0].trim();
+        setSelectedItemName(cleanedItemName);
     };
 
 
@@ -20,7 +27,10 @@ return (
         </h1>
             <div className="p-2">
                 <NewItem onAddItem={handleAddItem} />
-                <ItemList items={items} />
+                <ItemList items={items} onSelectItem={handleSelectItem} />
+            </div>
+            <div className="p-2">
+                <MealIdeas ingredients={selectedItemName}/>
             </div>
         </div>
     </main>
