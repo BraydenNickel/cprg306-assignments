@@ -1,13 +1,11 @@
-export default function Items ({ items }) {
+import React from 'react';
+
+export default function Items( { items }) {
     return (
-        <div>
-            {items.map((item) => (
-                <div key={item.id}>
-                    <h1>{item.name}</h1>
-                    <p>{item.quantity}</p>
-                    <p>{item.category}</p>
-                </div>
-            ))}
+        <div className ="" >
+            <h2>Item: {items.name}</h2> 
+            <p>Quantity: {items.quantity}</p>
+            <p>Category: {items.category}</p>
         </div>
-    )
+    );
 }

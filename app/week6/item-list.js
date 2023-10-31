@@ -1,14 +1,11 @@
 import React, { useState} from "react";
-import Item from "./item.js";
-import itemsData from "./items.json";
+import Items from "./item.js";
 import EventCard from "../week3/event-card";
 
-export default function ItemList() {
+export default function ItemList({ items }) {
     const [sortBy, setSortBy] = useState("name");
   
-    let sortedItems = itemsData.map((item) => item);
-  
-  sortedItems = sortedItems.sort((a, b) => {
+  items = items.sort((a, b) => {
       if (sortBy === "name") {
           return a.name.localeCompare(b.name);
       } else if (sortBy === "category") {
@@ -39,13 +36,14 @@ export default function ItemList() {
               Category
           </button>
       </div><h1 className="text-4xl font-bold m-5 text-center text-purple-500">
-          </h1><div>
-              {sortedItems.map((items) => (
-                  <><EventCard
+          </h1>
+          <div>
+              {items.map((items) => (
+                <><EventCard
                       name={items.name}
                       quantity={items.quantity}
                       category={items.category} />
-                  </>
+                </>
               ))}
           </div>
         </div>

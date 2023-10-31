@@ -2,7 +2,7 @@
 
 import { useState  } from "react";
 
-export default function NewItem() {
+export default function NewItem({ onAddItem }) {
     const [name, setName] = useState("");
     const [quantity, setQuantity] = useState("1");
     const [category, setCategory] = useState("Produce");
@@ -18,6 +18,11 @@ export default function NewItem() {
         };
         //send the object to the server
         console.log(newItem);
+
+        onAddItem(newItem);
+        setName("");
+        setQuantity(1);
+        setCategory("");
         // Alert the user that the item was created and display the item name quantity, and category
         alert("Item was added to the list\n" + "Item: " + newItem.name + "\n Quantity: " + newItem.quantity + "\n Category: " + newItem.category);
 
