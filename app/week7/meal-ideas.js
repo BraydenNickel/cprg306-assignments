@@ -30,13 +30,20 @@ export default function MealIdeas([ ingredients ]) {
     return (
         <div className="flex flex-col items-center justify-center">
             <h2 className="text-2xl font-bold m-2 text-center text-purple-500">
-                Meal Ideas
+                Meal Ideas {ingredients}
             </h2>
             <div className="p-2">
-                {meals.map((meal) => (
-                    <meal key={meal.idMeal} meal={meal} />
-                ))}
+                <ul>
+                    {meals.length > 0 ? (
+                        meals.map((meal) => (
+                            <li key={meal.idMeal}>{meal.strMeal}</li>
+                        ))
+                    ) : (
+                        <p>No meal ideas found</p>
+                    )}
+                </ul>
             </div>
+
         </div>
     );
 }
