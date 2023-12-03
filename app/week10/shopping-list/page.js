@@ -1,18 +1,42 @@
 'use client';
-import React, {useState} from "react";
-//import { Redirect } from "react-router-dom";
+import React, {useState, useEffect} from "react";
 import NewItem from "./new-item";
 import ItemList from "./item-list";
 import MealIdeas from "./meal-ideas";
-import ItemsData from "./items.json";
+import { GetItems, AddItem } from "./_services/shopping-list-service";
 
 export default function Page() {
     const [items, setItems] = useState(ItemsData);
     const [selectedItemName, setSelectedItemName] = useState(" ");
 
-    const handleAddItem = (newItem) => {
-        setItems([...items, newItem]);
-    };
+    //Load items from Firestone
+    /* 
+    Create an async function loadItems. Inside this function, call the getItems function to get the shopping list items for the current user using user.uid as the userId. Use setItems to set the state of items to the result of getItems.
+    */
+    useEffect(() => {
+        const loadItems = async () => {
+            try {
+                const items = await GetItems(user.uid);
+                setItems(items);
+            }
+            catch (error) {
+                console.log("Error loading items from database", error);
+            }
+        };
+        loadItems();
+    }, []);
+            
+
+    // Function to handle adding new items
+    const handleAddItem = async (newItem) => {
+    try {
+      const newItemData = await AddItem(user.uid, newItem);
+      setItems([...items, newItemData]);
+    } catch (error) {
+        console.log("Error adding new item", error);
+        }
+    }
+
 
     const handleSelectItem = (item) => {
         if (item.name) {
@@ -23,19 +47,12 @@ export default function Page() {
 
     console.log(selectedItemName);
 
-    /*
-  // Check if the user is not logged in and handle accordingly
-  if (!user) {
-    return <Redirect to="week8/page.js/" />;
-  }
-  */
-
   // Render the page content for logged-in users
 return (
     <main className="flex min-h-screen flex-col items-center justify-between p-4 bg-indigo-950">
         <div>
         <h1 className="text-4xl font-bold m-2 text-center text-purple-500">
-            Week 8
+            Week 10
         </h1>
             <div className="p-2">
                 <NewItem onAddItem={handleAddItem} />
